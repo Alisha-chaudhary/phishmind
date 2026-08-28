@@ -1,0 +1,10 @@
+# Day 1 (core engine) runs on the Python standard library only --
+# email, hashlib, re, ipaddress, argparse, dataclasses, json.
+# Nothing to install yet.
+
+# Added in later phases:
+# requests          # Phase 3: threat intel API calls (VirusTotal, AbuseIPDB, urlscan.io)
+# python-dotenv     # Phase 3: load API keys from .env instead of hardcoding
+# jinja2            # Phase 6: render the incident report template
+# rich              # Phase 7: nicer CLI / terminal output
+
