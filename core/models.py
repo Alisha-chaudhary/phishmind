@@ -154,6 +154,10 @@ class InvestigationCase:
     # Empty unless --enrich is used.
     enrichment_results: list = field(default_factory=list)
 
+    # Phase 4.5 AI analyst assistance.
+    # Populated only when --ai is used.
+    llm_analysis: Optional[str] = None
+
     def to_dict(self) -> dict:
         return asdict(self)
 

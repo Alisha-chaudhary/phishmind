@@ -30,3 +30,5 @@ rich>=13.7
 # Install everything with:
 #   pip install -r Requirements.txt --break-system-packages
 
+#llm-phase
+google-genai

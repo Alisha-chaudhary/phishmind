@@ -16,13 +16,17 @@ noted in the Phase 2 plan.
 
 from core.models import InvestigationCase
 
-from agents import ioc_agent, url_agent, email_agent, risk_agent
+from agents import ioc_agent, url_agent, email_agent, risk_agent, llm_agent
 
 
-def investigate(case: InvestigationCase, enrich: bool = False) -> InvestigationCase:
+def investigate(
+        case: InvestigationCase,
+        enrich: bool = False,
+        use_ai: bool = False,
+    ) -> InvestigationCase:
     """Mutates and returns the given case with agent_findings, verdict,
-    confidence, verdict_reasons, threat_assessment, and recommended_action
-    populated. Does not touch anything Phase 1 already set."""
+        confidence, verdict_reasons, threat_assessment, and recommended_action
+        populated. Does not touch anything Phase 1 already set."""
 
     indicators, ioc_finding = ioc_agent.run(case)
     known_domains = [i.normalized for i in indicators if i.indicator_type == "domain"]
@@ -41,7 +45,21 @@ def investigate(case: InvestigationCase, enrich: bool = False) -> InvestigationC
     # knows about the old shape (e.g. a report template built against
     # Phase 1) still gets a sensible value.
     case.verdict = assessment.verdict
-    case.confidence = {"low": 30, "medium": 60, "high": 90}.get(assessment.confidence, 0)
+    case.confidence = {"low": 30, "medium": 60, "high": 90}.get(
+        assessment.confidence, 0
+    )
     case.verdict_reasons = assessment.reasons
+
+    
+    # Phase 4.5: AI analyst assistance.
+    # The deterministic risk_agent remains authoritative.
+    if use_ai:
+        try:
+            case.llm_analysis = llm_agent.analyze(case)
+        except Exception as exc:
+            # AI failure must never break the deterministic investigation.
+            case.llm_analysis = (
+                f"AI analyst assistance unavailable: {exc}"
+            )
 
     return case

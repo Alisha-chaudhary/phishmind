@@ -165,7 +165,13 @@ def _print_human_rich(case: InvestigationCase) -> None:
         if ra:
             console.print(f"\n[bold]Recommended action:[/bold] {ra.action} (requires human approval: {ra.requires_human_approval})")
             console.print(f"Rationale: {ra.rationale}")
-
+        
+        if case.llm_analysis:
+            console.rule("[bold]PHASE 4.5 -- AI ANALYST ASSISTANCE[/bold]")
+            console.print(Panel(
+                case.llm_analysis,
+                title="Gemini SOC Analyst Explanation",
+            ))
     console.print()
 
 
@@ -271,12 +277,27 @@ def main():
         help="Phase 5: also write a standalone incident report (html or md) alongside normal output. "
              "Implies --investigate.",
     )
+
+
+    parser.add_argument(
+        "--ai",
+        action="store_true",
+        help="Phase 4.5: generate an AI-assisted SOC analyst explanation using Gemini. "
+             "Implies --investigate.",
+    )
+
     args = parser.parse_args()
 
     try:
         case = build_case(args.eml_file)
-        if args.investigate or args.enrich or args.report:
-            case = investigate(case, enrich=args.enrich)
+        if args.investigate or args.enrich or args.report or args.ai:
+            case = investigate(
+                case,
+                enrich=args.enrich,
+                use_ai=args.ai,
+            )
+      
+     
     except FileNotFoundError:
         print(f"Error: file not found: {args.eml_file}", file=sys.stderr)
         sys.exit(1)
