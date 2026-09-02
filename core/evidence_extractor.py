@@ -27,10 +27,33 @@ IPV4_RE = re.compile(
 
 HTML_TAG_RE = re.compile(r"<[^>]+>")
 
+# Pulls the URL out of href="..."/href='...' and src="..."/src='...'
+# attributes BEFORE tags are stripped. Without this, a phishing link like
+# <a href="http://evil.tld/x">Reset your password</a> loses the URL entirely
+# once HTML_TAG_RE deletes the whole tag -- the visible anchor text ("Reset
+# your password") is not a URL, so URL_RE finds nothing downstream. This is
+# the single most common phishing/BEC link pattern, so this bug is a real
+# false-negative source, not a cosmetic gap.
+HTML_ATTR_URL_RE = re.compile(
+    r"""(?i)\b(?:href|src)\s*=\s*(?:"([^"]*)"|'([^']*)')"""
+)
+
+
+def _extract_attr_urls(html: str) -> list[str]:
+    """Pull raw href/src attribute values out of HTML before tag-stripping."""
+    urls = []
+    for double_quoted, single_quoted in HTML_ATTR_URL_RE.findall(html):
+        value = double_quoted or single_quoted
+        if value:
+            urls.append(value)
+    return urls
+
 
 def _strip_html(html: str) -> str:
-    """Minimal tag stripper so URLs embedded in href/src attributes and
-    visible text both surface as plain text for the URL regex."""
+    """Minimal tag stripper so visible link text surfaces as plain text for
+    the URL regex. href/src URLs are pulled out separately in extract_urls
+    via _extract_attr_urls, since the anchor/img tag (and the URL inside it)
+    is removed wholesale here."""
     return HTML_TAG_RE.sub(" ", html)
 
 
@@ -42,7 +65,8 @@ def _normalize_url(raw_url: str) -> str:
 
 
 def extract_urls(text: str, html: str) -> list[str]:
-    combined = f"{text}\n{_strip_html(html)}"
+    attr_urls = _extract_attr_urls(html)
+    combined = f"{text}\n{_strip_html(html)}\n{chr(10).join(attr_urls)}"
     found = URL_RE.findall(combined)
     normalized = {_normalize_url(u).rstrip(".,;\"'") for u in found}
     return sorted(normalized)
@@ -83,4 +107,5 @@ def extract_ip_addresses(text: str, headers_raw: str) -> list[str]:
         except ValueError:
             continue
     return sorted(valid_public_ips)
+
 

@@ -1,0 +1,20 @@
+From: HR Team <hr@yourcompany.com>
+To: allstaff@yourcompany.com
+Reply-To: hr@yourcompany.com
+Subject: Updated holiday calendar for 2027
+Date: Wed, 26 Aug 2026 14:00:00 +0000
+Message-ID: <fp001@yourcompany.com>
+Authentication-Results: mx.example.com; spf=fail smtp.mailfrom=yourcompany.com; dkim=pass; dmarc=pass
+Content-Type: text/plain; charset="utf-8"
+
+Hi everyone,
+
+Attached is the updated public holiday calendar for 2027. We recently
+migrated our outbound mail servers to a new provider, so you may notice a
+temporary SPF warning in some mail clients until DNS fully propagates over
+the next few days -- IT is aware and tracking it.
+
+No action needed on your end.
+
+Thanks,
+HR Team

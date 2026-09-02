@@ -1,10 +1,32 @@
-# Day 1 (core engine) runs on the Python standard library only --
+# Phase 1 (core engine): Python standard library only --
 # email, hashlib, re, ipaddress, argparse, dataclasses, json.
-# Nothing to install yet.
 
-# Added in later phases:
-# requests          # Phase 3: threat intel API calls (VirusTotal, AbuseIPDB, urlscan.io)
-# python-dotenv     # Phase 3: load API keys from .env instead of hardcoding
-# jinja2            # Phase 6: render the incident report template
-# rich              # Phase 7: nicer CLI / terminal output
+
+# Phase 2 (agentic investigation pipeline): standard library only.
+# No new dependencies -- agents are plain Python classes/functions
+# operating on the Phase 1/2 dataclasses.
+
+
+# Phase 3 (threat-intel enrichment, --enrich flag). Optional: PhishMind
+# runs fully without these installed, --enrich just becomes unavailable.
+requests>=2.31
+python-dotenv>=1.0
+
+
+# Phase 4 (automated test suite).
+pytest>=7.4
+
+
+# Phase 5 (incident reports, --report flag). --report md needs nothing
+# extra; --report html needs jinja2.
+jinja2>=3.1
+
+
+# Phase 6 (CLI polish). Optional: phishmind.py falls back to plain text
+# output automatically if rich isn't installed.
+rich>=13.7
+
+
+# Install everything with:
+#   pip install -r Requirements.txt --break-system-packages
 

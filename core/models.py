@@ -5,8 +5,6 @@ Structured data model for a PhishMind investigation.
 
 Every stage of the pipeline (parser -> evidence extractor -> auth analyzer)
 writes into one of these dataclasses instead of passing around raw dicts.
-This is the same discipline ThreatLens uses: each module produces a typed
-object, and the final report is just a serialization of that object tree.
 """
 
 from dataclasses import dataclass, field, asdict
@@ -64,6 +62,64 @@ class Evidence:
     attachments: list = field(default_factory=list)    # list[Attachment]
 
 
+
+# ---------------------------------------------------------------------------
+# Phase 2
+# ---------------------------------------------------------------------------
+
+
+@dataclass
+class ThreatIndicator:
+    """One normalized IOC pulled out of the case, tagged with where it came
+    from. This is the unit the agents pass around and reference by value
+    when they justify a finding."""
+    indicator_type: str        # "domain" | "url" | "ip" | "hash" | "email_address"
+    value: str
+    source_field: str          # e.g. "body_url", "from_header", "attachment"
+    normalized: str            # lowercased / consistently-formed value
+
+
+@dataclass
+class AgentFinding:
+    """One observation from one analysis agent. Findings are additive and
+    non-authoritative on their own -- the risk agent is the only thing that
+    turns a pile of findings into a verdict."""
+    agent_name: str            # "email_agent" | "ioc_agent" | "url_agent"
+    finding: str                # short human-readable statement
+    evidence_refs: list = field(default_factory=list)   # indicator/header values that support this
+    confidence: str = "low"     # "low" | "medium" | "high" -- never a bare percentage
+    severity: str = "low"       # "low" | "medium" | "high" | "critical"
+    reasoning: str = ""          # why this finding was made
+
+
+@dataclass
+class AttackTechnique:
+    technique_id: str          # e.g. "T1566.002"
+    technique_name: str
+    justified_by: list = field(default_factory=list)   # evidence_refs backing the mapping
+
+
+@dataclass
+class ThreatAssessment:
+    """The risk agent's output. This is the only place a verdict is allowed
+    to be assigned in the whole pipeline."""
+    verdict: str = "inconclusive"      # "benign" | "suspicious" | "malicious" | "inconclusive"
+    severity: str = "low"              # "low" | "medium" | "high" | "critical"
+    confidence: str = "low"            # "low" | "medium" | "high"
+    reasons: list = field(default_factory=list)
+    possible_attack_objective: Optional[str] = None
+    mitre_techniques: list = field(default_factory=list)      # list[AttackTechnique]
+    missing_evidence: list = field(default_factory=list)
+    analyst_review_recommended: bool = True
+
+
+@dataclass
+class RecommendedAction:
+    action: str                 # "quarantine" | "block_domain" | "escalate_l2" | "no_action" | ...
+    rationale: str = ""
+    requires_human_approval: bool = True   # always True for now -- PhishMind never auto-remediates
+
+
 @dataclass
 class InvestigationCase:
     case_id: str
@@ -81,11 +137,22 @@ class InvestigationCase:
     body_text_preview: Optional[str] = None
     has_html_body: bool = False
 
-    # Populated later by the risk/verdict layer (Phase 4). Kept here now so
-    # the schema doesn't change shape when that layer is added.
+    # Phase 1 placeholders, now populated by the Phase 2 risk agent when
+    # --investigate is used. Left as None/[] when the CLI runs in Phase 1's
+    # default (no-flag) mode, exactly as before.
     verdict: Optional[str] = None
     confidence: Optional[int] = None
     verdict_reasons: list = field(default_factory=list)
+
+    # New in Phase 2. Empty list on any case that hasn't gone through the
+    # orchestrator, so Phase 1 default output is completely unaffected.
+    agent_findings: list = field(default_factory=list)         # list[AgentFinding]
+    threat_assessment: Optional[ThreatAssessment] = None
+    recommended_action: Optional[RecommendedAction] = None
+
+    # Phase 3 threat-intelligence enrichment.
+    # Empty unless --enrich is used.
+    enrichment_results: list = field(default_factory=list)
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -93,4 +160,3 @@ class InvestigationCase:
     @staticmethod
     def new_case_id() -> str:
         return f"PHISH-{datetime.now(timezone.utc).strftime('%Y%m%d-%H%M%S')}"
-

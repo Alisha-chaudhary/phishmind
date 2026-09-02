@@ -1,0 +1,945 @@
+Return-Path: <0109019be54f2f80-cc80c2ba-9149-416f-9552-05f91e1edb9d-000000@no-reply.kekamail.com>
+Received: from mailserve-delivery ([192.168.1.26])
+	by pid232.qlc.co.in with LMTP
+	id aKc3NtL/cWkFFgAAaaLg/Q:P1
+	(envelope-from <0109019be54f2f80-cc80c2ba-9149-416f-9552-05f91e1edb9d-000000@no-reply.kekamail.com>)
+	for <aditichaudhary@garudavega.net>; Thu, 22 Jan 2026 16:15:38 +0530
+Received: from sm2bl4.qlc.co.in ([192.168.1.26])
+	by mailserve-delivery with LMTP
+	id aKc3NtL/cWkFFgAAaaLg/Q
+	(envelope-from <0109019be54f2f80-cc80c2ba-9149-416f-9552-05f91e1edb9d-000000@no-reply.kekamail.com>)
+	for <aditichaudhary@garudavega.net>; Thu, 22 Jan 2026 16:15:38 +0530
+Received: from blade4.qlc.co.in (localhost [127.0.0.1])
+	by sm2bl4.qlc.co.in (Postfix) with ESMTP id B269C18A010B
+	for <aditichaudhary@garudavega.net>; Thu, 22 Jan 2026 16:15:38 +0530 (IST)
+Received: from qamail3.qlc.co.in (qamail3.qlc.co.in [43.227.17.34])
+	by blade4.qlc.co.in (Postfix) with ESMTP id 9E9B6141061
+	for <aditichaudhary@garudavega.net>; Thu, 22 Jan 2026 16:15:38 +0530 (IST)
+Received: from qamail3.qlc.co.in (localhost [127.0.0.1])
+	by qamail3.qlc.co.in (Postfix) with ESMTPS id 8E45160174
+	for <aditichaudhary@garudavega.net>; Thu, 22 Jan 2026 16:15:38 +0530 (IST)
+Received: from qamail3.qlc.co.in (localhost [127.0.0.1])
+	by qamail3.qlc.co.in (Postfix) with ESMTPS id 73B6E480186
+	for <aditichaudhary@garudavega.net>; Thu, 22 Jan 2026 16:15:38 +0530 (IST)
+Received: from qamail3.qlc.co.in (localhost [127.0.0.1])
+	by qamail3.qlc.co.in (Postfix) with ESMTPS id 4FB17500172
+	for <aditichaudhary@garudavega.net>; Thu, 22 Jan 2026 16:15:38 +0530 (IST)
+Received: from qamail3.qlc.co.in (localhost [127.0.0.1])
+	by qamail3.qlc.co.in (Postfix) with ESMTPS id 300E1200178
+	for <aditichaudhary@garudavega.net>; Thu, 22 Jan 2026 16:15:38 +0530 (IST)
+Received: from sec-mx2.qlc.co.in (sec-mx2.qlc.co.in [103.11.152.68])
+	by qamail3.qlc.co.in (Postfix) with ESMTP id 19D4820174
+	for <aditichaudhary@garudavega.net>; Thu, 22 Jan 2026 16:15:38 +0530 (IST)
+Received: from sec-mx2.qlc.co.in (localhost [127.0.0.1])
+	by sec-mx2.qlc.co.in (Postfix) with ESMTP id 14C1317D
+	for <aditichaudhary@garudavega.net>; Thu, 22 Jan 2026 16:15:38 +0530 (IST)
+Received: from sec-mx2.qlc.co.in (localhost [127.0.0.1])
+	by sec-mx2.qlc.co.in (Postfix) with ESMTP id 128EA40BB00D
+	for <aditichaudhary@garudavega.net>; Thu, 22 Jan 2026 16:15:38 +0530 (IST)
+Received: from sec-mx2.qlc.co.in (localhost [127.0.0.1])
+	by sec-mx2.qlc.co.in (Postfix) with ESMTP id 0BD571C2
+	for <aditichaudhary@garudavega.net>; Thu, 22 Jan 2026 16:15:38 +0530 (IST)
+Received: from sec-mx2.qlc.co.in (localhost [127.0.0.1])
+	by sec-mx2.qlc.co.in (Postfix) with ESMTP id 942D540BB00D
+	for <aditichaudhary@garudavega.net>; Thu, 22 Jan 2026 16:15:36 +0530 (IST)
+Received: from se13-mail.qlc.co.in (se13-mail.qlc.co.in [180.149.241.251])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(Client CN "*.qlc.co.in", Issuer "Sectigo Public Server Authentication CA DV R36" (not verified))
+	by sec-mx2.qlc.co.in (Postfix) with ESMTPS id 83ED540BB01D
+	for <aditichaudhary@garudavega.net>; Thu, 22 Jan 2026 16:15:36 +0530 (IST)
+Received: from c152-109.smtp-out.ap-south-1.amazonses.com ([76.223.152.109])
+	by se13-mail.qlc.co.in with esmtps  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <0109019be54f2f80-cc80c2ba-9149-416f-9552-05f91e1edb9d-000000@no-reply.kekamail.com>)
+	id 1visBv-001gVp-5s
+	for aditichaudhary@garudavega.net; Thu, 22 Jan 2026 05:45:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=az5bm4meuoes354eg3lcdohs7jtsrahp; d=kekamail.com; t=1769078730;
+	h=From:To:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID:Date;
+	bh=pzpAr7oG6ZgipTBTaZ0gmskmqpLMRyea8XFR2yuNvzQ=;
+	b=lI7Ml+1RwNnuD0fUnF685YKAjUaoYsuZhdXpQLYYqRVcVDGfI8G1DOYzMA2fsYhI
+	bTV4u8gPTR6PvVPpPI2/j/AqdOyKYQqG/MAU8jkQ7sELU8rFSxprTkzbUMfF5kYa1vj
+	cuQt0iCGRap7u7gthGWmO1WJctdJw0bNDi6N0oKuNIHebI5jvyOe+86I7QdNXiiauHP
+	wmDna7mVcbsgxVFGaXUPW08GhU8P86F0PoCKWW0zbgumYAFSXPoTEJ4lzQnNw1f4C1h
+	3smTIj+c70QLE0XOyPmMTlx6uojk3bDKI4Z/lcngCo95VIUCWffzBsq4Ect+vY4TfL1
+	fOJzmRvOgA==
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=dvogjbaa3ou3tduyzvyu4rj5tkuzdi4h; d=amazonses.com; t=1769078730;
+	h=From:To:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID:Date:Feedback-ID;
+	bh=pzpAr7oG6ZgipTBTaZ0gmskmqpLMRyea8XFR2yuNvzQ=;
+	b=ZusvVF5qFG1G063R01j6uXsrdxTfg9BpxqM2smWsFzE5CX76eGwMyAOXjbF7tAfd
+	bm2zW2nGSq0RcASEiTF44PgAUnYhW2j+DS7MZqmo37I1gW5qYzqt9pwH1S4jZLoIOXZ
+	sQy6Qn4dFURdCOpfE3AQxjO/3ZMKDu26K9cop0o4=
+From: NEXGEN LOGISTICS <no-reply@kekamail.com>
+To: ADITI CHAUDHARY <aditichaudhary@garudavega.net>
+Subject: Today is the last date for Investment Declaration
+MIME-Version: 1.0
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Message-ID: <0109019be54f2f80-cc80c2ba-9149-416f-9552-05f91e1edb9d-000000@ap-south-1.amazonses.com>
+Date: Thu, 22 Jan 2026 10:45:30 +0000
+Feedback-ID: ::1.ap-south-1.FGEOt4Y7aEjRHoHgiCc2/aJaMLEk4nbwbfCsanK6lnA=:AmazonSES
+X-SES-Outgoing: 2026.01.22-76.223.152.109
+Received-SPF: pass (se13-mail.qlc.co.in: domain of no-reply.kekamail.com designates 76.223.152.109 as permitted sender) client-ip=76.223.152.109; envelope-from=0109019be54f2f80-cc80c2ba-9149-416f-9552-05f91e1edb9d-000000@no-reply.kekamail.com; helo=c152-109.smtp-out.ap-south-1.amazonses.com;
+X-SPF-Result: se13-mail.qlc.co.in: domain of no-reply.kekamail.com designates 76.223.152.109 as permitted sender
+Authentication-Results: se13-mail.qlc.co.in;
+	iprev=pass (c152-109.smtp-out.ap-south-1.amazonses.com) smtp.remote-ip=76.223.152.109;
+	spf=pass smtp.mailfrom=no-reply.kekamail.com;
+	dkim=pass header.d=kekamail.com header.s=az5bm4meuoes354eg3lcdohs7jtsrahp header.a=rsa-sha256;
+	dkim=pass header.d=amazonses.com header.s=dvogjbaa3ou3tduyzvyu4rj5tkuzdi4h header.a=rsa-sha256;
+	dmarc=pass header.from=kekamail.com
+Authentication-Results:  qlc.co.in; spf=pass smtp.mailfrom=0109019be54f2f80-cc80c2ba-9149-416f-9552-05f91e1edb9d-000000@no-reply.kekamail.com; dkim=pass header.i=kekamail.com; dkim=pass header.i=amazonses.com
+X-SpamExperts-Class: unsure
+X-SpamExperts-Evidence: Combined (0.26)
+X-Recommended-Action: accept
+X-Filter-ID: 9kzQTOBWQUFZTohSKvQbgGmqEOBjpbqeFdJxFbMhHTFnIpaUUxNjaPUi18y95uePPKNHVeUoz1AC
+ AeRHIRfPTt3Is+74VlLYoF4ef7qOLh7VRokqnymaVaCmLr6N+gI75RDqU7uERnujwkOW5EzC2iNb
+ m5UkYauASrGC/ltkFPED9KSeIsC+IlnLq4GR15mvBSAhf7KePfwDvfKnApxf/QpyhwsqRcTJaA47
+ dlc3PxenD9WZC8P5vlcFWq8ZqxamcOM0GlH85c28zWBMoY6kdhekq38leFu//2hYKPYQxutLv6+v
+ jNXbFmb3/K6WJyMq63f/DQ6fR8wIRyzBWYDI0GJVqWWcFlw+tNJhBb3HAc8Yntd7dumlnSo9l10H
+ 8fbej0HqJXYbzj6qrPL8vQ76dT3Zv5pAzxbamah1qIyGSQcGSMbV1tDM+Ae0jBe1lPRwcyA9Gdxp
+ IJsPYp1lgiUtCgblWu3WGC+3btt2Jp1uS4JMAS0x836ahr/FP5QyMVOMhWqoHBs2Z1/giRMzipJ2
+ kN0OYIP/DrF0nAy2oPROgTnC934WZPHA2ntxZDiXL4hOfZXmhsocD+Wvq0q8SDwtILdbtNGnbxEJ
+ RQgwnl7CNk7dCSOCrjrK5gMkU5uGWOtBG9KjGGVLMp1uY0bqRNjeQZVMDUM/Ry/Tn9yfDOfJBkE9
+ 3SsS4aMXJmiJ2G0eb5ahMng6jKBXSLo+KbKY69lo0qe6St2Wi8Pqgc7KXPoGQ3aCnj7qYL6vPHu1
+ aNV4xr6sBjc20526aIHKC8XlaVmAqxqZR3KVQgqF/fPYYAfEfsgS2g+Af/VC2Wc4VtfUSUfj0T7X
+ hRqbn+LUqxiB6cE6JzzmecmwAVx+++VSCbD4aqB91Quk/mWLg0B5FEXHsxAr92PNDpgLsd6Ddd/s
+ 7VM53seYppsgGwwYNnSrArkT5nYqwIa61KaE81adkdmSJXnv8wWGxlNt2IlrrERkLAElMLghBMZo
+ I/HakYayT7n6T/XCm0gJIsXDw3SFolCJcoYAHHASJNUmoOHSoqgqxfHmWSPABdvCln0dDVtY0W0e
+ JryQ17vXJWzosxattXQcNqIgWpmL53Ko31TJzid7gRlgVs1gJzdN/ArnrnoJsAbQ0NDf11dtVfpO
+ s2AquFwlaE9iqmCOQfQ0MAqC4L63Qm3ruyy5l44Qh987nS2d3xrWCBnuS59TdW7t+jDKl9yMe2Zq
+ s3oaZTbeUWNZ3e/6IcO8CA==
+X-Report-Abuse-To: spam@se10-mail.qlc.co.in
+X-Complaints-To: abuse@se10-mail.qlc.co.in
+X-QLC-WBL: NF
+X-QLC-Spam: Unknown
+X-QLC-VOD: Unknown
+X-QLC-SENDER-FROM-MISMATCH: Found
+X-KLMS-Rule-ID: 1
+X-KLMS-Message-Action: clean
+X-KLMS-AntiSpam-Lua-Profiles: 199747 [Jan 22 2026]
+X-KLMS-AntiSpam-Version: 6.1.1.20
+X-KLMS-AntiSpam-Envelope-From: 0109019be54f2f80-cc80c2ba-9149-416f-9552-05f91e1edb9d-000000@no-reply.kekamail.com
+X-KLMS-AntiSpam-Rate: 0
+X-KLMS-AntiSpam-Status: not_detected
+X-KLMS-AntiSpam-Method: none
+X-KLMS-AntiSpam-Info: LuaCore: 86 0.3.86 47cb2a3d3f5c7e795bff2d0998e8c196722872ab, {dkim_exist_silent}, {Tracking_uf_ne_domains}, {Tracking_from_domain_doesnt_match_to}, {Tracking_logo_in_picture}, {Tracking_smtp_domain_mismatch}, FromAlignment: r, ApMailHostAddress: 180.149.241.251
+X-MS-Exchange-Organization-SCL: -1
+X-KLMS-AntiSpam-Interceptor-Info: scan successful
+X-KLMS-AntiPhishing: Clean, bases: 2026/01/22 08:49:00
+X-KLMS-AntiVirus: Kaspersky Security for Linux Mail Server, version 8.0.3.30, bases: 2026/01/22 09:34:00 #28141073
+X-KLMS-AntiVirus-Status: Clean, skipped
+
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <style type="text/css">
+        p {
+            margin: 10px 0;
+            padding: 0;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            display: block;
+            margin: 0;
+            padding: 0;
+        }
+
+        img,
+        a img {
+            border: 0;
+            height: auto;
+            outline: none;
+            text-decoration: none;
+        }
+
+        body,
+        #bodyTable,
+        #bodyCell {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+
+        #outlook a {
+            padding: 0;
+        }
+
+        img {
+            -ms-interpolation-mode: bicubic;
+        }
+
+        table {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+
+        .ReadMsgBody {
+            width: 100%;
+        }
+
+        .ExternalClass {
+            width: 100%;
+        }
+
+        p,
+        a,
+        li,
+        td,
+        blockquote {
+            mso-line-height-rule: exactly;
+        }
+
+            a[href^=tel],
+            a[href^=sms] {
+                color: inherit;
+                cursor: default;
+                text-decoration: none;
+            }
+
+        p,
+        a,
+        li,
+        td,
+        body,
+        table,
+        blockquote {
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        .ExternalClass,
+        .ExternalClass p,
+        .ExternalClass td,
+        .ExternalClass div,
+        .ExternalClass span,
+        .ExternalClass font {
+            line-height: 100%;
+        }
+
+        a[x-apple-data-detectors] {
+            color: inherit !important;
+            text-decoration: none !important;
+            font-size: inherit !important;
+            font-family: inherit !important;
+            font-weight: inherit !important;
+            line-height: inherit !important;
+        }
+
+        #bodyCell {
+            padding: 10px;
+        }
+
+        .templateContainer {
+            max-width: 600px !important;
+        }
+
+        a.mcnButton {
+            display: block;
+        }
+
+        .mcnImage {
+            vertical-align: bottom;
+        }
+
+        .mcnTextContent {
+            word-break: break-word;
+        }
+
+            .mcnTextContent img {
+                height: auto !important;
+            }
+
+        .mcnDividerBlock {
+            table-layout: fixed !important;
+        }
+        /*
+        @tab Page
+        @section Background Style
+        @tip Set the background color and top border for your email. You may want to choose colors that match your company's branding.
+        */
+
+        body,
+        #bodyTable {
+            /*@editable*/
+            background-color: #f4f4f4;
+        }
+        /*
+        @tab Page
+        @section Background Style
+        @tip Set the background color and top border for your email. You may want to choose colors that match your company's branding.
+        */
+
+        #bodyCell {
+            /*@editable*/
+            border-top: 0;
+        }
+        /*
+        @tab Page
+        @section Email Border
+        @tip Set the border for your email.
+        */
+
+        .templateContainer {
+            /*@editable*/
+            border: 0;
+        }
+        /*
+        @tab Page
+        @section Heading 1
+        @tip Set the styling for all first-level headings in your emails. These should be the largest of your headings.
+        @style heading 1
+        */
+
+        h1 {
+            /*@editable*/
+            color: #202020;
+            /*@editable*/
+            font-family: Helvetica;
+            /*@editable*/
+            font-size: 26px;
+            /*@editable*/
+            font-style: normal;
+            /*@editable*/
+            font-weight: bold;
+            /*@editable*/
+            line-height: 125%;
+            /*@editable*/
+            letter-spacing: normal;
+            /*@editable*/
+            text-align: left;
+        }
+        /*
+        @tab Page
+        @section Heading 2
+        @tip Set the styling for all second-level headings in your emails.
+        @style heading 2
+        */
+
+        h2 {
+            /*@editable*/
+            color: #202020;
+            /*@editable*/
+            font-family: Helvetica;
+            /*@editable*/
+            font-size: 22px;
+            /*@editable*/
+            font-style: normal;
+            /*@editable*/
+            font-weight: bold;
+            /*@editable*/
+            line-height: 125%;
+            /*@editable*/
+            letter-spacing: normal;
+            /*@editable*/
+            text-align: left;
+        }
+        /*
+        @tab Page
+        @section Heading 3
+        @tip Set the styling for all third-level headings in your emails.
+        @style heading 3
+        */
+
+        h3 {
+            /*@editable*/
+            color: #202020;
+            /*@editable*/
+            font-family: Helvetica;
+            /*@editable*/
+            font-size: 20px;
+            /*@editable*/
+            font-style: normal;
+            /*@editable*/
+            font-weight: bold;
+            /*@editable*/
+            line-height: 125%;
+            /*@editable*/
+            letter-spacing: normal;
+            /*@editable*/
+            text-align: left;
+        }
+        /*
+        @tab Page
+        @section Heading 4
+        @tip Set the styling for all fourth-level headings in your emails. These should be the smallest of your headings.
+        @style heading 4
+        */
+
+        h4 {
+            /*@editable*/
+            color: #202020;
+            /*@editable*/
+            font-family: Helvetica;
+            /*@editable*/
+            font-size: 18px;
+            /*@editable*/
+            font-style: normal;
+            /*@editable*/
+            font-weight: bold;
+            /*@editable*/
+            line-height: 125%;
+            /*@editable*/
+            letter-spacing: normal;
+            /*@editable*/
+            text-align: left;
+        }
+        /*
+        @tab Preheader
+        @section Preheader Style
+        @tip Set the background color and borders for your email's preheader area.
+        */
+
+        #templatePreheader {
+            /*@editable*/
+            background-color: #ffffff;
+            /*@editable*/
+            border-top: 0;
+            /*@editable*/
+            border-bottom: 0;
+            /*@editable*/
+            padding-top: 9px;
+            /*@editable*/
+            padding-bottom: 9px;
+        }
+            /*
+        @tab Preheader
+        @section Preheader Text
+        @tip Set the styling for your email's preheader text. Choose a size and color that is easy to read.
+        */
+
+            #templatePreheader .mcnTextContent,
+            #templatePreheader .mcnTextContent p {
+                /*@editable*/
+                color: #656565;
+                /*@editable*/
+                font-family: Helvetica;
+                /*@editable*/
+                font-size: 12px;
+                /*@editable*/
+                line-height: 150%;
+                /*@editable*/
+                text-align: left;
+            }
+                /*
+        @tab Preheader
+        @section Preheader Link
+        @tip Set the styling for your email's preheader links. Choose a color that helps them stand out from your text.
+        */
+
+                #templatePreheader .mcnTextContent a,
+                #templatePreheader .mcnTextContent p a {
+                    /*@editable*/
+                    color: #656565;
+                    /*@editable*/
+                    font-weight: normal;
+                    /*@editable*/
+                    text-decoration: underline;
+                }
+        /*
+        @tab Header
+        @section Header Style
+        @tip Set the background color and borders for your email's header area.
+        */
+
+        #templateHeader {
+            /*@editable*/
+            background-color: #FFFFFF;
+            /*@editable*/
+            border-top: 0;
+            /*@editable*/
+            border-bottom: 0;
+            /*@editable*/
+            padding-top: 9px;
+            /*@editable*/
+            padding-bottom: 0;
+        }
+            /*
+        @tab Header
+        @section Header Text
+        @tip Set the styling for your email's header text. Choose a size and color that is easy to read.
+        */
+
+            #templateHeader .mcnTextContent,
+            #templateHeader .mcnTextContent p {
+                /*@editable*/
+                color: #202020;
+                /*@editable*/
+                font-family: Helvetica;
+                /*@editable*/
+                font-size: 16px;
+                /*@editable*/
+                line-height: 150%;
+                /*@editable*/
+                text-align: left;
+            }
+                /*
+        @tab Header
+        @section Header Link
+        @tip Set the styling for your email's header links. Choose a color that helps them stand out from your text.
+        */
+
+                #templateHeader .mcnTextContent a,
+                #templateHeader .mcnTextContent p a {
+                    /*@editable*/
+                    color: #2BAADF;
+                    /*@editable*/
+                    font-weight: normal;
+                    /*@editable*/
+                    text-decoration: underline;
+                }
+        /*
+        @tab Body
+        @section Body Style
+        @tip Set the background color and borders for your email's body area.
+        */
+
+        #templateBody {
+            /*@editable*/
+            background-color: #FFFFFF;
+            /*@editable*/
+            border-top: 0;
+            /*@editable*/
+            border-bottom: 0;
+            /*@editable*/
+            padding-top: 0;
+            /*@editable*/
+            padding-bottom: 9px;
+        }
+            /*
+        @tab Body
+        @section Body Text
+        @tip Set the styling for your email's body text. Choose a size and color that is easy to read.
+        */
+
+            #templateBody .mcnTextContent,
+            #templateBody .mcnTextContent p {
+                /*@editable*/
+                color: #202020;
+                /*@editable*/
+                font-family: Helvetica;
+                /*@editable*/
+                font-size: 16px;
+                /*@editable*/
+                line-height: 150%;
+                /*@editable*/
+                text-align: left;
+            }
+                /*
+        @tab Body
+        @section Body Link
+        @tip Set the styling for your email's body links. Choose a color that helps them stand out from your text.
+        */
+
+                #templateBody .mcnTextContent a,
+                #templateBody .mcnTextContent p a {
+                    /*@editable*/
+                    color: #2BAADF;
+                    /*@editable*/
+                    font-weight: normal;
+                    /*@editable*/
+                    text-decoration: underline;
+                }
+        /*
+        @tab Footer
+        @section Footer Style
+        @tip Set the background color and borders for your email's footer area.
+        */
+
+        #templateFooter {
+            /*@editable*/
+            background-color: #f4f4f4;
+            /*@editable*/
+            border-top: 0;
+            /*@editable*/
+            border-bottom: 0;
+            /*@editable*/
+            padding-top: 9px;
+            /*@editable*/
+            padding-bottom: 9px;
+        }
+            /*
+        @tab Footer
+        @section Footer Text
+        @tip Set the styling for your email's footer text. Choose a size and color that is easy to read.
+        */
+
+            #templateFooter .mcnTextContent,
+            #templateFooter .mcnTextContent p {
+                /*@editable*/
+                color: #656565;
+                /*@editable*/
+                font-family: Helvetica;
+                /*@editable*/
+                font-size: 12px;
+                /*@editable*/
+                line-height: 150%;
+                /*@editable*/
+                text-align: center;
+            }
+                /*
+        @tab Footer
+        @section Footer Link
+        @tip Set the styling for your email's footer links. Choose a color that helps them stand out from your text.
+        */
+
+                #templateFooter .mcnTextContent a,
+                #templateFooter .mcnTextContent p a {
+                    /*@editable*/
+                    color: #656565;
+                    /*@editable*/
+                    font-weight: normal;
+                    /*@editable*/
+                    text-decoration: underline;
+                }
+
+        @media only screen and (min-width:768px) {
+            .templateContainer {
+                width: 600px !important;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            body,
+            table,
+            td,
+            p,
+            a,
+            li,
+            blockquote {
+                -webkit-text-size-adjust: none !important;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            body {
+                width: 100% !important;
+                min-width: 100% !important;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            #bodyCell {
+                padding-top: 10px !important;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            .mcnImage {
+                width: 100% !important;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            .mcnCaptionTopContent,
+            .mcnCaptionBottomContent,
+            .mcnTextContentContainer,
+            .mcnBoxedTextContentContainer,
+            .mcnImageGroupContentContainer,
+            .mcnCaptionLeftTextContentContainer,
+            .mcnCaptionRightTextContentContainer,
+            .mcnCaptionLeftImageContentContainer,
+            .mcnCaptionRightImageContentContainer,
+            .mcnImageCardLeftTextContentContainer,
+            .mcnImageCardRightTextContentContainer {
+                max-width: 100% !important;
+                width: 100% !important;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            .mcnBoxedTextContentContainer {
+                min-width: 100% !important;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            .mcnImageGroupContent {
+                padding: 9px !important;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            .mcnCaptionLeftContentOuter .mcnTextContent,
+            .mcnCaptionRightContentOuter .mcnTextContent {
+                padding-top: 9px !important;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            .mcnImageCardTopImageContent,
+            .mcnCaptionBlockInner .mcnCaptionTopContent:last-child .mcnTextContent {
+                padding-top: 18px !important;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            .mcnImageCardBottomImageContent {
+                padding-bottom: 9px !important;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            .mcnImageGroupBlockInner {
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            .mcnImageGroupBlockOuter {
+                padding-top: 9px !important;
+                padding-bottom: 9px !important;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            .mcnTextContent,
+            .mcnBoxedTextContentColumn {
+                padding-right: 18px !important;
+                padding-left: 18px !important;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            .mcnImageCardLeftImageContent,
+            .mcnImageCardRightImageContent {
+                padding-right: 18px !important;
+                padding-bottom: 0 !important;
+                padding-left: 18px !important;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            .mcpreview-image-uploader {
+                display: none !important;
+                width: 100% !important;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            /*
+        @tab Mobile Styles
+        @section Heading 1
+        @tip Make the first-level headings larger in size for better readability on small screens.
+        */
+            h1 {
+                /*@editable*/
+                font-size: 22px !important;
+                /*@editable*/
+                line-height: 125% !important;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            /*
+        @tab Mobile Styles
+        @section Heading 2
+        @tip Make the second-level headings larger in size for better readability on small screens.
+        */
+            h2 {
+                /*@editable*/
+                font-size: 20px !important;
+                /*@editable*/
+                line-height: 125% !important;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            /*
+        @tab Mobile Styles
+        @section Heading 3
+        @tip Make the third-level headings larger in size for better readability on small screens.
+        */
+            h3 {
+                /*@editable*/
+                font-size: 18px !important;
+                /*@editable*/
+                line-height: 125% !important;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            /*
+        @tab Mobile Styles
+        @section Heading 4
+        @tip Make the fourth-level headings larger in size for better readability on small screens.
+        */
+            h4 {
+                /*@editable*/
+                font-size: 16px !important;
+                /*@editable*/
+                line-height: 150% !important;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            /*
+        @tab Mobile Styles
+        @section Boxed Text
+        @tip Make the boxed text larger in size for better readability on small screens. We recommend a font size of at least 16px.
+        */
+            .mcnBoxedTextContentContainer .mcnTextContent,
+            .mcnBoxedTextContentContainer .mcnTextContent p {
+                /*@editable*/
+                font-size: 14px !important;
+                /*@editable*/
+                line-height: 150% !important;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            /*
+        @tab Mobile Styles
+        @section Preheader Visibility
+        @tip Set the visibility of the email's preheader on small screens. You can hide it to save space.
+        */
+            #templatePreheader {
+                /*@editable*/
+                display: block !important;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            /*
+        @tab Mobile Styles
+        @section Preheader Text
+        @tip Make the preheader text larger in size for better readability on small screens.
+        */
+            #templatePreheader .mcnTextContent,
+            #templatePreheader .mcnTextContent p {
+                /*@editable*/
+                font-size: 14px !important;
+                /*@editable*/
+                line-height: 150% !important;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            /*
+        @tab Mobile Styles
+        @section Header Text
+        @tip Make the header text larger in size for better readability on small screens.
+        */
+            #templateHeader .mcnTextContent,
+            #templateHeader .mcnTextContent p {
+                /*@editable*/
+                font-size: 16px !important;
+                /*@editable*/
+                line-height: 150% !important;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            /*
+        @tab Mobile Styles
+        @section Body Text
+        @tip Make the body text larger in size for better readability on small screens. We recommend a font size of at least 16px.
+        */
+            #templateBody .mcnTextContent,
+            #templateBody .mcnTextContent p {
+                /*@editable*/
+                font-size: 16px !important;
+                /*@editable*/
+                line-height: 150% !important;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            /*
+        @tab Mobile Styles
+        @section Footer Text
+        @tip Make the footer content text larger in size for better readability on small screens.
+        */
+            #templateFooter .mcnTextContent,
+            #templateFooter .mcnTextContent p {
+                /*@editable*/
+                font-size: 14px !important;
+                /*@editable*/
+                line-height: 150% !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <table align="center" border="0" cellpadding="0" cellspacing="0" height="0" width="0" id="preheaderTable">
+            <tr>
+                <td>
+                    <span style="display:none"></span>
+                </td>
+            </tr>
+        </table>
+        <table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable">
+            <tr>
+                <td align="center" valign="top" id="bodyCell">
+                    <table border="0" cellpadding="0" cellspacing="0" width="600" class="templateContainer" style="border: 1px solid #E4E4E4">
+                        <tr>
+                            <td valign="top" id="templateBody">
+                                <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width:100%;" class="mcnTextContentContainer">
+                                    <tbody>
+                                        <tr>
+                                            <td valign="top" class="mcnTextContent" style="padding-top:30px; padding-right: 30px; padding-left: 30px;">
+<p style="text-align: center;">
+    <strong style="border-bottom: 2px solid #4390EF; font-family: helvetica;font-size: 18px;">Declaration Due Date Today</strong>
+</p>
+<div>
+    <div style="padding-top:10px; padding-right: 20px; padding-left: 20px;">
+        <span style="color: #202020;font-family: helvetica;font-size: 13px;line-height: 20px;">
+            Hi ADITI CHAUDHARY,
+        </span>
+    </div>
+    <div style="padding-top:10px; padding-right: 20px; padding-left: 20px;">
+        <span style="color: #202020;font-family: helvetica;font-size: 13px;line-height: 20px;">
+            Last date for making income tax declarations is today , i.e., 22 Jan 2026. Please make sure to declare all investments done by you, before due date, to avoid paying more income tax for this financial year.
+        </span>
+        <br />
+        <span>Here's a summary of Investment Declarations made by you:</span>
+        <div style="padding-top:10px; padding-right: 20px;">
+            <span style="color: #202020;font-family: helvetica;font-size: 15px;line-height: 20px; font-weight: bold">Declaration Details</span>
+        </div>
+        <div style="padding: 10px 0px">
+            <div style="text-align:center;"><br/><blockquote>No Declarations Available!</blockquote><br/></div><div style="padding - top:10px; padding - right: 20px; padding - left: 20px; line - height: 16px;"><span style = "color: #202020;font-family: helvetica;font-size: 11px;line-height: 11px;">To review, update or declare more amount, <a href = "https://nexgen.keka.com/#/myfinances/managetax/declaration/summary" style = "color: #5bc0de; text-decoration: none"> click here.</a></span></div> 
+        </div>
+    </div>
+    <div style="padding-top:20px; padding-right: 20px; padding-left: 20px;line-height: 20px;">
+        <span style="color: #202020;font-family: helvetica;font-size: 13px;">Regards,</span>
+    </div>
+    <div style="padding-bottom: 20px; padding-right: 20px; padding-left: 20px;line-height: 20px;">
+        <span style="color: #202020;font-family: helvetica;font-size: 13px;">NEXGEN LOGISTICS</span>
+    </div>
+</div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <table border="0" cellpadding="0" class="templateContainer" cellspacing="0">
+                        <tr>
+                            <td class="mcnImageContent" valign="top" style="padding-right: 0px; padding-left: 0px; padding-top: 15px; padding-bottom: 0;">
+                                <img align="left" alt="Keka Logo" src="https://cdn.keka.com/shared/branding/logo/keka-logo-100.png" width="70" class="mcnImage">
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </center>
+</body>
+</html>

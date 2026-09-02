@@ -1,0 +1,20 @@
+From: Rajesh Kumar <rajesh.kumar@vendorcorp.com>
+To: accounts@example.com
+Reply-To: rajesh.kumar@vendorcorp.com
+Subject: Updated bank details for upcoming invoice
+Date: Sat, 22 Aug 2026 02:47:00 +0000
+Message-ID: <bec001@vendorcorp.com>
+Authentication-Results: mx.example.com; spf=pass smtp.mailfrom=vendorcorp.com; dkim=pass; dmarc=pass
+Content-Type: text/plain; charset="utf-8"
+
+Hi team,
+
+Please note we have updated our bank details for all future payments due
+to an internal account migration. Kindly use the new account routing
+information for the invoice attached and wire the funds to the new
+account by end of week.
+
+Let me know once processed.
+
+Rajesh Kumar
+VendorCorp Accounts

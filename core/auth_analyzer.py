@@ -19,13 +19,16 @@ from email.utils import parseaddr
 
 from core.models import AuthenticationResult, SenderAnalysis
 
-# Common brand names abused in display-name spoofing. Not exhaustive --
-# meant as a first-pass heuristic flag for analyst review, not a verdict.
+# Common BRAND names abused in display-name spoofing (e.g. "Microsoft
+# Account Team", "PayPal Support"). Deliberately excludes generic
+# department/role words like "HR", "IT Support", "Payroll", "Helpdesk" --
+# those appear constantly in legitimate internal business email and, matched
+# without care, produce exactly the false-positive this project exists to
+# avoid (see data/test_emails/04_false_positive_auth_failure.eml).
 COMMONLY_SPOOFED_BRANDS = [
     "microsoft", "office365", "paypal", "apple", "amazon", "google",
-    "netflix", "bank", "docusign", "irs", "fedex", "ups", "dhl",
-    "linkedin", "facebook", "instagram", "chase", "wellsfargo", "hr",
-    "it support", "helpdesk", "payroll",
+    "netflix", "docusign", "irs", "fedex", "ups", "dhl",
+    "linkedin", "facebook", "instagram", "chase", "wellsfargo",
 ]
 
 
@@ -75,7 +78,10 @@ def analyze_sender(msg: EmailMessage) -> SenderAnalysis:
     if from_display and from_domain:
         display_lower = from_display.lower()
         for brand in COMMONLY_SPOOFED_BRANDS:
-            if brand in display_lower and brand.replace(" ", "") not in from_domain:
+            # Word-boundary match, not raw substring -- "hsbc" should not
+            # match inside "hsbcorp", and multi-word brands like
+            # "office365" still match as a contiguous token.
+            if re.search(rf"\b{re.escape(brand)}\b", display_lower) and brand.replace(" ", "") not in from_domain:
                 display_name_spoof_suspected = True
                 break
 
@@ -90,4 +96,5 @@ def analyze_sender(msg: EmailMessage) -> SenderAnalysis:
         return_path_mismatch=return_path_mismatch,
         display_name_spoof_suspected=display_name_spoof_suspected,
     )
+
 
